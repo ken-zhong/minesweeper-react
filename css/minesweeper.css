@@ -1,0 +1,29 @@
+html, body, div, main, span {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: inline;
+  margin: 0 auto;
+  text-align: center;
+  /*display: flex;
+  flex-direction: column;
+  justify-content: center;*/
+}
+
+.tile {
+  background-color: #eee;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border: 1px solid red;
+}
+
+.revealed {
+
+}
+
+.flagged {
+
+}
