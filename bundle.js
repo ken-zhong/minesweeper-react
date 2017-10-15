@@ -21752,6 +21752,8 @@ var Tile = function (_React$Component) {
           return ' black';
         case 8:
           return ' gray';
+        default:
+          return '';
       }
     }
   }]);

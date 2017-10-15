@@ -48,6 +48,7 @@ class Tile extends React.Component {
       case 6: return ' turqoise';
       case 7: return ' black';
       case 8: return ' gray';
+      default: return '';
     }
   }
 }
