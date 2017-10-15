@@ -29,6 +29,7 @@ html, body, div, main, span {
   border: 1px solid #757575;
   cursor: pointer;
   position: relative;
+  font-size: 15px;
 }
 
 .revealed {
@@ -38,3 +39,6 @@ html, body, div, main, span {
 .flagged {
 
 }
+
+/*flag*/
+/*🚩 💣  */

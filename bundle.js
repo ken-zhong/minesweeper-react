@@ -21432,6 +21432,8 @@ var Board = exports.Board = function () {
             tile.value = neighbors.reduce(function (acc, tile) {
               return tile.mine ? acc + 1 : acc + 0;
             }, 0);
+          } else {
+            tile.value = '💣';
           }
         });
       });
