@@ -21588,6 +21588,18 @@ var Board = function (_React$Component) {
             'h3',
             null,
             'Congratulations! You won!'
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'new-game' },
+            'Play again? ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn-easy', onClick: function onClick() {
+                  return window.location.reload();
+                } },
+              'New Game'
+            )
           )
         );
       } else if (this.gameBoard.gameOver) {
@@ -21598,6 +21610,18 @@ var Board = function (_React$Component) {
             'h3',
             null,
             'Oops! Game over!'
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'new-game' },
+            'Play again? ',
+            _react2.default.createElement(
+              'button',
+              { className: 'btn-easy', onClick: function onClick() {
+                  return window.location.reload();
+                } },
+              'New Game'
+            )
           )
         );
       } else {
@@ -21607,12 +21631,17 @@ var Board = function (_React$Component) {
           _react2.default.createElement(
             'p',
             null,
-            'Right click to reveal a tile.'
+            'Left click to reveal a tile.'
           ),
           _react2.default.createElement(
             'p',
             null,
-            'Alt + right click to flag a tile'
+            'Right click to flag a tile'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Alt + left click to \'chord\' around a tile (*still WIP*)'
           )
         );
       }
@@ -21660,13 +21689,19 @@ var Tile = function (_React$Component) {
     _this.gameTile = props.gameTile;
     _this.gameBoard = props.gameBoard;
     _this.updateBoard = props.updateBoard;
+    _this.handleClick = _this.handleClick.bind(_this);
     return _this;
   }
 
   _createClass(Tile, [{
     key: 'handleClick',
-    value: function handleClick() {
-      this.gameBoard.revealPos(this.gameTile.pos);
+    value: function handleClick(e) {
+      e.preventDefault();
+      if (e.nativeEvent.which === 1) {
+        this.gameBoard.revealPos(this.gameTile.pos);
+      } else if (e.nativeEvent.which === 3) {
+        this.gameTile.toggleFlag();
+      }
       this.updateBoard();
     }
   }, {
@@ -21680,11 +21715,19 @@ var Tile = function (_React$Component) {
       } else if (this.gameTile.flagged) {
         toRender = '🚩';
       }
-      return _react2.default.createElement(
-        'div',
-        { onClick: this.handleClick.bind(this), className: classNames },
-        toRender
-      );
+      if (this.gameBoard.gameOver) {
+        return _react2.default.createElement(
+          'div',
+          { className: classNames },
+          toRender
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          { onClick: this.handleClick, onContextMenu: this.handleClick, className: classNames },
+          toRender
+        );
+      }
     }
   }]);
 

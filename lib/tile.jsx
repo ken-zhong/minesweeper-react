@@ -6,10 +6,16 @@ class Tile extends React.Component {
     this.gameTile = props.gameTile;
     this.gameBoard = props.gameBoard;
     this.updateBoard = props.updateBoard;
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick () {
-    this.gameBoard.revealPos(this.gameTile.pos);
+  handleClick (e) {
+    e.preventDefault();
+    if (e.nativeEvent.which === 1) {
+      this.gameBoard.revealPos(this.gameTile.pos);
+    } else if (e.nativeEvent.which === 3) {
+      this.gameTile.toggleFlag();
+    }
     this.updateBoard();
   }
 
@@ -18,11 +24,15 @@ class Tile extends React.Component {
     let classNames = 'tile';
     if (this.gameTile.revealed) {
       toRender = (this.gameTile.value === 0 ? '' : this.gameTile.value);
-      classNames += ' revealed'
+      classNames += ' revealed';
     } else if (this.gameTile.flagged) {
       toRender = '🚩';
     }
-    return <div onClick={this.handleClick.bind(this)} className={classNames}>{toRender}</div>;
+    if (this.gameBoard.gameOver) {
+      return <div className={classNames}>{toRender}</div>;
+    } else {
+      return <div onClick={this.handleClick} onContextMenu={this.handleClick} className={classNames}>{toRender}</div>;
+    }
   }
 }
 

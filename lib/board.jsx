@@ -32,19 +32,22 @@ class Board extends React.Component {
       return (
         <header>
           <h3>Congratulations! You won!</h3>
+          <p className='new-game'>Play again? <button className='btn-easy' onClick={() => window.location.reload()}>New Game</button></p>
         </header>
       );
     } else if (this.gameBoard.gameOver) {
       return (
         <header>
           <h3>Oops! Game over!</h3>
+          <p className='new-game'>Play again? <button className='btn-easy' onClick={() => window.location.reload()}>New Game</button></p>
         </header>
       );
     } else {
       return (
         <header>
-          <p>Right click to reveal a tile.</p>
-          <p>Alt + right click to flag a tile</p>
+          <p>Left click to reveal a tile.</p>
+          <p>Right click to flag a tile</p>
+          <p>Alt + left click to 'chord' around a tile (*still WIP*)</p>
         </header>
       );
     }
