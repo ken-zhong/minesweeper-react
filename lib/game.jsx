@@ -5,8 +5,9 @@ import Board from './board.jsx';
 class Game extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {showTitleScreen: false};
 
+    // TODO change this to true
+    this.state = {showTitleScreen: false};
     // TODO temp delete
     this.gameBoard = new Minesweeper.Board('easy');
   }
