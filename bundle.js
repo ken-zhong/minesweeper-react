@@ -21698,7 +21698,9 @@ var Tile = function (_React$Component) {
     value: function handleClick(e) {
       e.preventDefault();
       if (e.nativeEvent.which === 1) {
-        this.gameBoard.revealPos(this.gameTile.pos);
+        if (!this.gameTile.flagged) {
+          this.gameBoard.revealPos(this.gameTile.pos);
+        }
       } else if (e.nativeEvent.which === 3) {
         this.gameTile.toggleFlag();
       }
