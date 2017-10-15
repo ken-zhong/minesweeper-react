@@ -8,7 +8,7 @@ class Game extends React.Component {
     this.state = {showTitleScreen: false};
 
     // TODO temp delete
-    this.gameBoard = new Minesweeper.Board('hard');
+    this.gameBoard = new Minesweeper.Board('easy');
   }
 
   startGame (difficulty) {

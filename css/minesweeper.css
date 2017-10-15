@@ -1,6 +1,7 @@
 html, body, div, main, span {
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
 
 #root {
@@ -12,12 +13,18 @@ html, body, div, main, span {
   justify-content: center;*/
 }
 
+.board {
+  display: inline-block;
+  border: 1px solid #757575;
+}
+
 .tile {
   background-color: #eee;
   width: 20px;
   height: 20px;
   display: inline-block;
-  border: 1px solid red;
+  border: 1px solid #757575;
+  cursor: pointer;
 }
 
 .revealed {
