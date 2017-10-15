@@ -1,0 +1,63 @@
+html, body, div, main, span {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+#root {
+  display: inline;
+  margin: 0 auto;
+  text-align: center;
+  /*display: flex;
+  flex-direction: column;
+  justify-content: center;*/
+}
+
+.board {
+  display: inline-block;
+  border: 1px solid #757575;
+}
+
+.row {
+  display: flex;
+}
+
+.tile {
+  background-color: #eee;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #757575;
+  cursor: pointer;
+  position: relative;
+  font-size: 15px;
+}
+
+.revealed {
+
+}
+
+.flagged {
+
+}
+
+[class*="btn-"] {
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-easy {
+  background-color: #1cce08;
+}
+.btn-med {
+  background-color: #ce9504;
+}
+.btn-hard {
+  background-color: #c40303;
+}
+
+/*flag*/
+/*🚩 💣  */

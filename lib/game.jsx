@@ -6,6 +6,12 @@ class Game extends React.Component {
   constructor (props) {
     super(props);
     this.state = {showTitleScreen: true};
+    this.updateBoard = this.updateBoard.bind(this);
+  }
+
+  updateBoard () {
+    // this will call a re-render of the entire board
+    this.setState({board: this.gameBoard});
   }
 
   startGame (difficulty) {
@@ -25,7 +31,7 @@ class Game extends React.Component {
       );
     } else {
       return (
-        <Board gameBoard={this.gameBoard} />
+        <Board gameBoard={this.gameBoard} updateBoard={this.updateBoard} />
       );
     }
   }

@@ -21234,17 +21234,10 @@ var Game = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
     _this.state = { showTitleScreen: true };
-    _this.updateBoard = _this.updateBoard.bind(_this);
     return _this;
   }
 
   _createClass(Game, [{
-    key: 'updateBoard',
-    value: function updateBoard() {
-      // this will call a re-render of the entire board
-      this.setState({ board: this.gameBoard });
-    }
-  }, {
     key: 'startGame',
     value: function startGame(difficulty) {
       this.gameBoard = new Minesweeper.Board(difficulty);
@@ -21287,7 +21280,7 @@ var Game = function (_React$Component) {
           )
         );
       } else {
-        return _react2.default.createElement(_board2.default, { gameBoard: this.gameBoard, updateBoard: this.updateBoard });
+        return _react2.default.createElement(_board2.default, { gameBoard: this.gameBoard });
       }
     }
   }]);
@@ -21338,7 +21331,13 @@ var Tile = exports.Tile = function () {
   }, {
     key: 'revealTile',
     value: function revealTile() {
-      this.revealed = true;
+      if (!this.mine) {
+        this.revealed = true;
+        return this.value;
+      } else {
+        // a negative return from this means it's game over!
+        return false;
+      }
     }
   }, {
     key: 'setPos',
@@ -21384,7 +21383,6 @@ var Board = exports.Board = function () {
     this.diff = difficulty;
     this.gridSize = Board.DIFFICULTY_LEVELS[difficulty].gridSize;
     this.numMines = Board.DIFFICULTY_LEVELS[difficulty].numMines;
-    this.gameOver = false;
     this.setupBoard();
     this.setTileValues();
   }
@@ -21445,39 +21443,18 @@ var Board = exports.Board = function () {
     }
   }, {
     key: 'revealPos',
-    value: function revealPos(pos) {
-      var _this3 = this;
-
-      var tile = this.getTile(pos);
-      if (tile.mine) {
-        this.triggerGameOver();
-      } else if (tile.value > 0) {
-        tile.revealTile();
-      } else if (tile.value === 0 && !tile.revealed) {
-        tile.revealTile();
-        var neighbors = this.getNeighbors(pos);
-        console.log(neighbors);
-        neighbors.forEach(function (neighbor) {
-          _this3.revealPos(neighbor.pos);
-        });
-      }
-    }
+    value: function revealPos() {}
   }, {
     key: 'flagmine',
-    value: function flagmine(pos) {
-      this.getTile(pos).toggleFlag();
-    }
+    value: function flagmine() {}
   }, {
     key: 'triggerGameOver',
     value: function triggerGameOver() {
       this.grid.forEach(function (row, x) {
         row.forEach(function (tile, y) {
-          if (tile.mine) {
-            tile.revealTile();
-          }
+          tile.revealTile();
         });
       });
-      this.gameOver = true;
     }
   }, {
     key: 'isWon',
@@ -21547,21 +21524,25 @@ var Board = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Board.__proto__ || Object.getPrototypeOf(Board)).call(this, props));
 
     _this.gameBoard = props.gameBoard;
-    _this.updateBoard = props.updateBoard;
-    _this.state = { board: _this.gameBoard };
     return _this;
   }
 
   _createClass(Board, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
-      var header = this.getHeader();
       return _react2.default.createElement(
         'div',
         null,
-        header,
+        _react2.default.createElement(
+          'p',
+          null,
+          'Right click to reveal a tile'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Alt + right click to flag a tile'
+        ),
         _react2.default.createElement(
           'div',
           { className: 'board' },
@@ -21570,52 +21551,12 @@ var Board = function (_React$Component) {
               'div',
               { className: 'row', key: idx },
               row.map(function (tile, jdx) {
-                return _react2.default.createElement(_tile2.default, { gameBoard: _this2.gameBoard, updateBoard: _this2.updateBoard, gameTile: tile, key: '' + idx + jdx });
+                return _react2.default.createElement(_tile2.default, { gameTile: tile, key: '' + idx + jdx });
               })
             );
           })
         )
       );
-    }
-  }, {
-    key: 'getHeader',
-    value: function getHeader() {
-      if (this.gameBoard.isWon()) {
-        return _react2.default.createElement(
-          'header',
-          null,
-          _react2.default.createElement(
-            'h3',
-            null,
-            'Congratulations! You won!'
-          )
-        );
-      } else if (this.gameBoard.gameOver) {
-        return _react2.default.createElement(
-          'header',
-          null,
-          _react2.default.createElement(
-            'h3',
-            null,
-            'Oops! Game over!'
-          )
-        );
-      } else {
-        return _react2.default.createElement(
-          'header',
-          null,
-          _react2.default.createElement(
-            'p',
-            null,
-            'Right click to reveal a tile.'
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Alt + right click to flag a tile'
-          )
-        );
-      }
     }
   }]);
 
@@ -21634,6 +21575,7 @@ exports.default = Board;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Tile = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -21649,7 +21591,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Tile = function (_React$Component) {
+var Tile = exports.Tile = function (_React$Component) {
   _inherits(Tile, _React$Component);
 
   function Tile(props) {
@@ -21657,33 +21599,17 @@ var Tile = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Tile.__proto__ || Object.getPrototypeOf(Tile)).call(this, props));
 
-    _this.gameTile = props.gameTile;
-    _this.gameBoard = props.gameBoard;
-    _this.updateBoard = props.updateBoard;
+    _this.gameTile = _this.props.gameTile;
     return _this;
   }
 
   _createClass(Tile, [{
-    key: 'handleClick',
-    value: function handleClick() {
-      this.gameBoard.revealPos(this.gameTile.pos);
-      this.updateBoard();
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var toRender = '';
-      var classNames = 'tile';
-      if (this.gameTile.revealed) {
-        toRender = this.gameTile.value === 0 ? '' : this.gameTile.value;
-        classNames += ' revealed';
-      } else if (this.gameTile.flagged) {
-        toRender = '🚩';
-      }
       return _react2.default.createElement(
         'div',
-        { onClick: this.handleClick.bind(this), className: classNames },
-        toRender
+        { className: 'tile' },
+        this.gameTile.value
       );
     }
   }]);

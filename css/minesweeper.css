@@ -8,14 +8,12 @@ html, body, div, main, span {
   display: inline;
   margin: 0 auto;
   text-align: center;
-  /*display: flex;
-  flex-direction: column;
-  justify-content: center;*/
 }
 
 .board {
   display: inline-block;
-  border: 1px solid #757575;
+  margin-bottom: 25px;
+  /*border: 1px solid #757575;*/
 }
 
 .row {
@@ -29,11 +27,13 @@ html, body, div, main, span {
   border: 1px solid #757575;
   cursor: pointer;
   position: relative;
+  font-family: courier;
+  font-weight: bold;
   font-size: 15px;
 }
 
 .revealed {
-
+  background-color: #ddd;
 }
 
 .flagged {
