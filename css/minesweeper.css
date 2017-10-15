@@ -67,5 +67,29 @@ h3 {
   background-color: #c40303;
 }
 
+/*COLORS FOR VALUE TILES*/
+.blue {
+  color: blue;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.purple {
+  color: purple;
+}
+.maroon {
+  color: #660f31;
+}
+.turquoise {
+  color: turquoise;
+}
+.gray {
+  color: darkgray;
+}
+
+
 /*flag*/
 /*🚩 💣  */

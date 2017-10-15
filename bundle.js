@@ -21714,6 +21714,7 @@ var Tile = function (_React$Component) {
       if (this.gameTile.revealed) {
         toRender = this.gameTile.value === 0 ? '' : this.gameTile.value;
         classNames += ' revealed';
+        classNames += this.getColor(this.gameTile.value);
       } else if (this.gameTile.flagged) {
         toRender = '🚩';
       }
@@ -21729,6 +21730,28 @@ var Tile = function (_React$Component) {
           { onClick: this.handleClick, onContextMenu: this.handleClick, className: classNames },
           toRender
         );
+      }
+    }
+  }, {
+    key: 'getColor',
+    value: function getColor(num) {
+      switch (num) {
+        case 1:
+          return ' blue';
+        case 2:
+          return ' green';
+        case 3:
+          return ' red';
+        case 4:
+          return ' purple';
+        case 5:
+          return ' maroon';
+        case 6:
+          return ' turqoise';
+        case 7:
+          return ' black';
+        case 8:
+          return ' gray';
       }
     }
   }]);
