@@ -7,7 +7,7 @@ export class Tile extends React.Component {
   }
 
   render () {
-    return <span className='tile'>T</span>;
+    return <div className='tile'>{this.gameTile.value}</div>;
   }
 }
 

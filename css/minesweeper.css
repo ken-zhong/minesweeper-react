@@ -18,13 +18,17 @@ html, body, div, main, span {
   border: 1px solid #757575;
 }
 
+.row {
+  display: flex;
+}
+
 .tile {
   background-color: #eee;
   width: 20px;
   height: 20px;
-  display: inline-block;
   border: 1px solid #757575;
   cursor: pointer;
+  position: relative;
 }
 
 .revealed {
