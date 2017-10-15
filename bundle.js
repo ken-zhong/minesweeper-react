@@ -982,16 +982,6 @@ var Main = function Main(props) {
       null,
       'Minesweeper'
     ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'Right click to reveal a tile'
-    ),
-    _react2.default.createElement(
-      'p',
-      null,
-      'Alt + right click to flag a tile'
-    ),
     _react2.default.createElement(_game2.default, null)
   );
 };
@@ -21241,12 +21231,9 @@ var Game = function (_React$Component) {
   function Game(props) {
     _classCallCheck(this, Game);
 
-    // TODO change this to true
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
-    _this.state = { showTitleScreen: false };
-    // TODO temp delete
-    _this.gameBoard = new Minesweeper.Board('easy');
+    _this.state = { showTitleScreen: true };
     return _this;
   }
 
@@ -21254,6 +21241,7 @@ var Game = function (_React$Component) {
     key: 'startGame',
     value: function startGame(difficulty) {
       this.gameBoard = new Minesweeper.Board(difficulty);
+      this.setState({ showTitleScreen: false });
     }
   }, {
     key: 'render',
@@ -21271,21 +21259,21 @@ var Game = function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { onClick: function onClick() {
+            { className: 'btn-easy', onClick: function onClick() {
                 return _this2.startGame('easy');
               } },
             'Easy'
           ),
           _react2.default.createElement(
             'button',
-            { onClick: function onClick() {
+            { className: 'btn-med', onClick: function onClick() {
                 return _this2.startGame('medium');
               } },
             'Medium'
           ),
           _react2.default.createElement(
             'button',
-            { onClick: function onClick() {
+            { className: 'btn-hard', onClick: function onClick() {
                 return _this2.startGame('hard');
               } },
             'Hard'
@@ -21544,16 +21532,30 @@ var Board = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'board' },
-        this.gameBoard.grid.map(function (row, idx) {
-          return _react2.default.createElement(
-            'div',
-            { className: 'row', key: idx },
-            row.map(function (tile, jdx) {
-              return _react2.default.createElement(_tile2.default, { gameTile: tile, key: '' + idx + jdx });
-            })
-          );
-        })
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          'Right click to reveal a tile'
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Alt + right click to flag a tile'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'board' },
+          this.gameBoard.grid.map(function (row, idx) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'row', key: idx },
+              row.map(function (tile, jdx) {
+                return _react2.default.createElement(_tile2.default, { gameTile: tile, key: '' + idx + jdx });
+              })
+            );
+          })
+        )
       );
     }
   }]);

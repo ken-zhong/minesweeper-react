@@ -9,14 +9,18 @@ class Board extends React.Component {
 
   render () {
     return (
-      <div className='board'>
-        { this.gameBoard.grid.map((row, idx) => {
-          return (
-            <div className='row' key={idx}>
-              {row.map((tile, jdx) => <Tile gameTile={tile} key={`${idx}${jdx}`} />)}
-            </div>
-          );
-        })}
+      <div>
+        <p>Right click to reveal a tile</p>
+        <p>Alt + right click to flag a tile</p>
+        <div className='board'>
+          { this.gameBoard.grid.map((row, idx) => {
+            return (
+              <div className='row' key={idx}>
+                {row.map((tile, jdx) => <Tile gameTile={tile} key={`${idx}${jdx}`} />)}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

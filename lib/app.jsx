@@ -6,8 +6,6 @@ const Main = (props) => {
   return (
     <div>
       <h1>Minesweeper</h1>
-      <p>Right click to reveal a tile</p>
-      <p>Alt + right click to flag a tile</p>
       <Game />
     </div>
   );

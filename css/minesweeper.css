@@ -40,5 +40,24 @@ html, body, div, main, span {
 
 }
 
+[class*="btn-"] {
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-easy {
+  background-color: #1cce08;
+}
+.btn-med {
+  background-color: #ce9504;
+}
+.btn-hard {
+  background-color: #c40303;
+}
+
 /*flag*/
 /*🚩 💣  */
