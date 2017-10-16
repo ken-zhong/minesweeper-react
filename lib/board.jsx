@@ -32,14 +32,14 @@ class Board extends React.Component {
       return (
         <header>
           <h3>Congratulations! You won!</h3>
-          <p className='new-game'>Play again? <button className='btn-easy' onClick={() => window.location.reload()}>New Game</button></p>
+          <p className='new-game'>Play again? <button className='btn-easy' onClick={this.props.resetGame}>New Game</button></p>
         </header>
       );
     } else if (this.gameBoard.gameOver) {
       return (
         <header>
           <h3>Oops! Game over!</h3>
-          <p className='new-game'>Play again? <button className='btn-easy' onClick={() => window.location.reload()}>New Game</button></p>
+          <p className='new-game'>Play again? <button className='btn-easy' onClick={this.props.resetGame}>New Game</button></p>
         </header>
       );
     } else {

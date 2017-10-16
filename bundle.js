@@ -21235,6 +21235,7 @@ var Game = function (_React$Component) {
 
     _this.state = { showTitleScreen: true };
     _this.updateBoard = _this.updateBoard.bind(_this);
+    _this.resetGame = _this.resetGame.bind(_this);
     return _this;
   }
 
@@ -21249,6 +21250,11 @@ var Game = function (_React$Component) {
     value: function startGame(difficulty) {
       this.gameBoard = new Minesweeper.Board(difficulty);
       this.setState({ showTitleScreen: false });
+    }
+  }, {
+    key: 'resetGame',
+    value: function resetGame() {
+      this.setState({ showTitleScreen: true });
     }
   }, {
     key: 'render',
@@ -21287,7 +21293,7 @@ var Game = function (_React$Component) {
           )
         );
       } else {
-        return _react2.default.createElement(_board2.default, { gameBoard: this.gameBoard, updateBoard: this.updateBoard });
+        return _react2.default.createElement(_board2.default, { gameBoard: this.gameBoard, updateBoard: this.updateBoard, resetGame: this.resetGame });
       }
     }
   }]);
@@ -21328,11 +21334,8 @@ var Tile = exports.Tile = function () {
   _createClass(Tile, [{
     key: 'toggleFlag',
     value: function toggleFlag() {
-      if (this.revealed) {
-        return false;
-      } else {
+      if (!this.revealed) {
         this.flagged = !this.flagged;
-        return true;
       }
     }
   }, {
@@ -21403,7 +21406,6 @@ var Board = exports.Board = function () {
         }
         this.grid.push(row);
       }
-      console.log(this.grid);
     }
   }, {
     key: 'getTile',
@@ -21456,7 +21458,6 @@ var Board = exports.Board = function () {
       } else if (tile.value === 0 && !tile.revealed) {
         tile.revealTile();
         var neighbors = this.getNeighbors(pos);
-        console.log(neighbors);
         neighbors.forEach(function (neighbor) {
           _this3.revealPos(neighbor.pos);
         });
@@ -21595,9 +21596,7 @@ var Board = function (_React$Component) {
             'Play again? ',
             _react2.default.createElement(
               'button',
-              { className: 'btn-easy', onClick: function onClick() {
-                  return window.location.reload();
-                } },
+              { className: 'btn-easy', onClick: this.props.resetGame },
               'New Game'
             )
           )
@@ -21617,9 +21616,7 @@ var Board = function (_React$Component) {
             'Play again? ',
             _react2.default.createElement(
               'button',
-              { className: 'btn-easy', onClick: function onClick() {
-                  return window.location.reload();
-                } },
+              { className: 'btn-easy', onClick: this.props.resetGame },
               'New Game'
             )
           )

@@ -7,6 +7,7 @@ class Game extends React.Component {
     super(props);
     this.state = {showTitleScreen: true};
     this.updateBoard = this.updateBoard.bind(this);
+    this.resetGame = this.resetGame.bind(this);
   }
 
   updateBoard () {
@@ -17,6 +18,10 @@ class Game extends React.Component {
   startGame (difficulty) {
     this.gameBoard = new Minesweeper.Board(difficulty);
     this.setState({showTitleScreen: false});
+  }
+
+  resetGame () {
+    this.setState({showTitleScreen: true});
   }
 
   render () {
@@ -31,7 +36,7 @@ class Game extends React.Component {
       );
     } else {
       return (
-        <Board gameBoard={this.gameBoard} updateBoard={this.updateBoard} />
+        <Board gameBoard={this.gameBoard} updateBoard={this.updateBoard} resetGame={this.resetGame} />
       );
     }
   }
