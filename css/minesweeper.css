@@ -31,16 +31,18 @@ h3 {
   background-color: #eee;
   width: 20px;
   height: 20px;
-  border: 1px solid #757575;
   cursor: pointer;
   position: relative;
   font-family: courier;
   font-weight: bold;
   font-size: 15px;
+  border-width: 2px;
+  border-style: outset;
 }
 
 .revealed {
   background-color: #ddd;
+  border-style: inset;
 }
 
 .flagged {
