@@ -991,6 +991,10 @@ document.addEventListener('DOMContentLoaded', function () {
   _reactDom2.default.render(_react2.default.createElement(Main, null), root);
 });
 
+// questions:
+// how to get long press == right click?
+// when to separate out components? see board.getHeader;
+
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -21464,6 +21468,26 @@ var Board = exports.Board = function () {
       }
     }
   }, {
+    key: 'chord',
+    value: function chord(pos) {
+      var _this4 = this;
+
+      // first get neighbors
+      // do nothing if flagged neighbors < value
+      // if >=, then reveal all neighbors, triggering game over if a flag is incorrectly placed
+      var tile = this.getTile(pos);
+      var neighbors = this.getNeighbors(pos);
+      if (tile.value <= neighbors.reduce(function (acc, el) {
+        return el.flagged ? acc + 1 : acc;
+      }, 0)) {
+        neighbors.forEach(function (neighbor) {
+          if (!neighbor.flagged) {
+            _this4.revealPos(neighbor.pos);
+          }
+        });
+      }
+    }
+  }, {
     key: 'flagmine',
     value: function flagmine(pos) {
       this.getTile(pos).toggleFlag();
@@ -21638,7 +21662,7 @@ var Board = function (_React$Component) {
           _react2.default.createElement(
             'p',
             null,
-            'Alt + left click to \'chord\' around a tile (*still WIP*)'
+            'Click an already revealed tile to \'chord\''
           )
         );
       }
@@ -21696,7 +21720,11 @@ var Tile = function (_React$Component) {
       e.preventDefault();
       if (e.nativeEvent.which === 1) {
         if (!this.gameTile.flagged) {
-          this.gameBoard.revealPos(this.gameTile.pos);
+          if (!this.gameTile.revealed) {
+            this.gameBoard.revealPos(this.gameTile.pos);
+          } else {
+            this.gameBoard.chord(this.gameTile.pos);
+          }
         }
       } else if (e.nativeEvent.which === 3) {
         this.gameTile.toggleFlag();

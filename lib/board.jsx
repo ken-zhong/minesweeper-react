@@ -47,7 +47,7 @@ class Board extends React.Component {
         <header>
           <p>Left click to reveal a tile.</p>
           <p>Right click to flag a tile</p>
-          <p>Alt + left click to 'chord' around a tile (*still WIP*)</p>
+          <p>Click an already revealed tile to 'chord'</p>
         </header>
       );
     }

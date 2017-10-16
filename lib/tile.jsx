@@ -13,7 +13,11 @@ class Tile extends React.Component {
     e.preventDefault();
     if (e.nativeEvent.which === 1) {
       if (!this.gameTile.flagged) {
-        this.gameBoard.revealPos(this.gameTile.pos);
+        if (!this.gameTile.revealed) {
+          this.gameBoard.revealPos(this.gameTile.pos);
+        } else {
+          this.gameBoard.chord(this.gameTile.pos);
+        }
       }
     } else if (e.nativeEvent.which === 3) {
       this.gameTile.toggleFlag();

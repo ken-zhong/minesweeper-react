@@ -15,3 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
   ReactDOM.render(<Main />, root);
 });
+
+// questions:
+// how to get long press == right click?
+// when to separate out components? see board.getHeader;
