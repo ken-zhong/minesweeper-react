@@ -35,7 +35,7 @@ class Tile extends React.Component {
     } else if (this.gameTile.flagged) {
       toRender = '🚩';
     }
-    if (this.gameBoard.gameOver) {
+    if (this.gameBoard.gameOver || this.gameBoard.isWon()) {
       return <div className={classNames}>{toRender}</div>;
     } else {
       return <div onClick={this.handleClick} onContextMenu={this.handleClick} className={classNames}>{toRender}</div>;

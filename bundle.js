@@ -21322,6 +21322,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// this file contains the 'back end' logic of the game
+
 var Tile = exports.Tile = function () {
   function Tile() {
     var mineFlag = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -21743,7 +21745,7 @@ var Tile = function (_React$Component) {
       } else if (this.gameTile.flagged) {
         toRender = '🚩';
       }
-      if (this.gameBoard.gameOver) {
+      if (this.gameBoard.gameOver || this.gameBoard.isWon()) {
         return _react2.default.createElement(
           'div',
           { className: classNames },
