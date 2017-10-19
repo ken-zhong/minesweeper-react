@@ -37,7 +37,7 @@ class Game extends React.Component {
           <h3>Select your difficulty level</h3>
           <button className='btn-easy' onClick={() => this.startGame('easy')}>Easy</button>
           <button className='btn-med' onClick={() => this.startGame('medium')}>Medium</button>
-          <button className='btn-hard' onClick={() => this.startGame('hard')}>Hard</button>
+          <button className='btn-hard' onClick={() => this.startGame('hard')}>Expert</button>
         </div>
       );
     } else {
