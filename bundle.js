@@ -21219,6 +21219,10 @@ var _board = __webpack_require__(34);
 
 var _board2 = _interopRequireDefault(_board);
 
+var _util = __webpack_require__(36);
+
+var Util = _interopRequireWildcard(_util);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -21252,7 +21256,12 @@ var Game = function (_React$Component) {
   }, {
     key: 'startGame',
     value: function startGame(difficulty) {
+      // if on mobile, I want to transpose this grid
       this.gameBoard = new Minesweeper.Board(difficulty);
+      if (Util.isMobile()) {
+        var newGrid = Util.transpose(this.gameBoard.grid);
+        this.gameBoard.grid = newGrid;
+      }
       this.setState({ showTitleScreen: false });
     }
   }, {
@@ -21402,10 +21411,10 @@ var Board = exports.Board = function () {
     key: 'setupBoard',
     value: function setupBoard() {
       var size = this.gridSize;
-      var tiles = Tile.generateTiles(size * size, this.numMines);
-      for (var i = 0; i < size; i++) {
+      var tiles = Tile.generateTiles(size[0] * size[1], this.numMines);
+      for (var i = 0; i < size[0]; i++) {
         var row = [];
-        for (var j = 0; j < size; j++) {
+        for (var j = 0; j < size[1]; j++) {
           var tile = tiles.pop();
           tile.setPos([i, j]);
           row.push(tile);
@@ -21523,7 +21532,7 @@ var Board = exports.Board = function () {
   }, {
     key: 'onBoard',
     value: function onBoard(pos) {
-      return pos[0] >= 0 && pos[0] < this.gridSize && pos[1] >= 0 && pos[1] < this.gridSize;
+      return pos[0] >= 0 && pos[0] < this.gridSize[0] && pos[1] >= 0 && pos[1] < this.gridSize[1];
     }
   }]);
 
@@ -21531,9 +21540,9 @@ var Board = exports.Board = function () {
 }();
 
 Board.DIFFICULTY_LEVELS = {
-  'easy': { gridSize: 8, numMines: 10 },
-  'medium': { gridSize: 16, numMines: 40 },
-  'hard': { gridSize: 24, numMines: 99 }
+  'easy': { gridSize: [8, 8], numMines: 10 },
+  'medium': { gridSize: [16, 16], numMines: 40 },
+  'hard': { gridSize: [16, 30], numMines: 99 }
 };
 
 /***/ }),
@@ -21789,6 +21798,34 @@ var Tile = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Tile;
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.transpose = transpose;
+exports.isMobile = isMobile;
+function transpose(arr) {
+  var grid = arr.slice(0);
+  var result = grid[0].map(function (col, i) {
+    return grid.map(function (row) {
+      return row[i];
+    });
+  });
+  return result;
+}
+
+// found this mobile checker here!
+// https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
+function isMobile() {
+  return typeof window.orientation !== 'undefined' || navigator.userAgent.indexOf('IEMobile') !== -1;
+}
 
 /***/ })
 /******/ ]);

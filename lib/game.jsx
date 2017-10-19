@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Minesweeper from './minesweeper.js';
 import Board from './board.jsx';
+import * as Util from './util.js';
 
 class Game extends React.Component {
   constructor (props) {
@@ -16,7 +17,12 @@ class Game extends React.Component {
   }
 
   startGame (difficulty) {
+    // if on mobile, I want to transpose this grid
     this.gameBoard = new Minesweeper.Board(difficulty);
+    if (Util.isMobile()) {
+      let newGrid = Util.transpose(this.gameBoard.grid);
+      this.gameBoard.grid = newGrid;
+    }
     this.setState({showTitleScreen: false});
   }
 
