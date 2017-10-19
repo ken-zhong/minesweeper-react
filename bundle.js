@@ -21256,12 +21256,13 @@ var Game = function (_React$Component) {
   }, {
     key: 'startGame',
     value: function startGame(difficulty) {
-      // if on mobile, I want to transpose this grid
-      this.gameBoard = new Minesweeper.Board(difficulty);
-      if (Util.isMobile()) {
-        var newGrid = Util.transpose(this.gameBoard.grid);
-        this.gameBoard.grid = newGrid;
+      if (Util.isMobile() && difficulty === 'hard') {
+        // if on mobile, we'll start with a transposed grid which is better suited for mobile UI
+        this.gameBoard = new Minesweeper.Board('hardMobile');
+      } else {
+        this.gameBoard = new Minesweeper.Board(difficulty);
       }
+
       this.setState({ showTitleScreen: false });
     }
   }, {
@@ -21302,7 +21303,7 @@ var Game = function (_React$Component) {
             { className: 'btn-hard', onClick: function onClick() {
                 return _this2.startGame('hard');
               } },
-            'Hard'
+            'Expert'
           )
         );
       } else {
@@ -21542,7 +21543,8 @@ var Board = exports.Board = function () {
 Board.DIFFICULTY_LEVELS = {
   'easy': { gridSize: [8, 8], numMines: 10 },
   'medium': { gridSize: [16, 16], numMines: 40 },
-  'hard': { gridSize: [16, 30], numMines: 99 }
+  'hard': { gridSize: [16, 30], numMines: 99 },
+  'hardMobile': { gridSize: [30, 16], numMines: 99 }
 };
 
 /***/ }),
@@ -21809,18 +21811,7 @@ exports.default = Tile;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.transpose = transpose;
 exports.isMobile = isMobile;
-function transpose(arr) {
-  var grid = arr.slice(0);
-  var result = grid[0].map(function (col, i) {
-    return grid.map(function (row) {
-      return row[i];
-    });
-  });
-  return result;
-}
-
 // found this mobile checker here!
 // https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
 function isMobile() {

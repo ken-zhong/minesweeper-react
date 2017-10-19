@@ -17,12 +17,13 @@ class Game extends React.Component {
   }
 
   startGame (difficulty) {
-    // if on mobile, I want to transpose this grid
-    this.gameBoard = new Minesweeper.Board(difficulty);
-    if (Util.isMobile()) {
-      let newGrid = Util.transpose(this.gameBoard.grid);
-      this.gameBoard.grid = newGrid;
+    if (Util.isMobile() && difficulty === 'hard') {
+      // if on mobile, we'll start with a transposed grid which is better suited for mobile UI
+      this.gameBoard = new Minesweeper.Board('hardMobile');
+    } else {
+      this.gameBoard = new Minesweeper.Board(difficulty);
     }
+
     this.setState({showTitleScreen: false});
   }
 
