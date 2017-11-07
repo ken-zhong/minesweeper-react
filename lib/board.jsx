@@ -11,9 +11,11 @@ class Board extends React.Component {
       board: this.gameBoard,
       gameTime: 0
     };
-    this.startTimer = this.startTimer.bind(this);
-    this.stopTimer = this.stopTimer.bind(this);
     this.startTimer();
+  }
+
+  componentWillUnmount () {
+    this.stopTimer();
   }
 
   startTimer () {
@@ -28,7 +30,7 @@ class Board extends React.Component {
   }
 
   formatNumString (num) {
-    switch (num) {
+    switch (true) {
       case num > 999: return 999;
       case num > 99: return num;
       case num > 9: return '0' + num;
@@ -46,7 +48,9 @@ class Board extends React.Component {
         <div className='board'>
           <div className='timer-container'>
             <span>{ this.formatNumString(this.gameBoard.mineCounter()) }</span>
-            <span className='reset-smiley'>😃</span>
+            <span onClick={this.props.resetGame} className='reset-smiley'>
+              { this.gameBoard.gameOver ? '🤣' : '😃' }
+            </span>
             <span>{ this.formatNumString(this.state.gameTime) }</span>
           </div>
           { this.gameBoard.grid.map((row, idx) => {

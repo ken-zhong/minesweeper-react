@@ -21607,13 +21607,16 @@ var Board = function (_React$Component) {
       board: _this.gameBoard,
       gameTime: 0
     };
-    _this.startTimer = _this.startTimer.bind(_this);
-    _this.stopTimer = _this.stopTimer.bind(_this);
     _this.startTimer();
     return _this;
   }
 
   _createClass(Board, [{
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.stopTimer();
+    }
+  }, {
     key: 'startTimer',
     value: function startTimer() {
       var _this2 = this;
@@ -21631,7 +21634,7 @@ var Board = function (_React$Component) {
   }, {
     key: 'formatNumString',
     value: function formatNumString(num) {
-      switch (num) {
+      switch (true) {
         case num > 999:
           return 999;
         case num > 99:
@@ -21667,8 +21670,8 @@ var Board = function (_React$Component) {
             ),
             _react2.default.createElement(
               'span',
-              { className: 'reset-smiley' },
-              '\uD83D\uDE03'
+              { onClick: this.props.resetGame, className: 'reset-smiley' },
+              this.gameBoard.gameOver ? '🤣' : '😃'
             ),
             _react2.default.createElement(
               'span',
