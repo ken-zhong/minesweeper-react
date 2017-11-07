@@ -21825,10 +21825,27 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.isMobile = isMobile;
+exports.wakeServer = wakeServer;
+exports.getHighScores = getHighScores;
+/* global fetch */
+
 // found this mobile checker here!
 // https://coderwall.com/p/i817wa/one-line-function-to-detect-mobile-devices-with-javascript
 function isMobile() {
   return typeof window.orientation !== 'undefined' || navigator.userAgent.indexOf('IEMobile') !== -1;
+}
+
+// just in case the Heroku dyno is asleep!
+function wakeServer() {
+  fetch('https://minesweeper-r.herokuapp.com/').then(function (res) {
+    return res.json();
+  }).then(function (body) {
+    return console.log(body);
+  });
+}
+
+function getHighScores() {
+  return 'hi';
 }
 
 /***/ }),
