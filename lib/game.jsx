@@ -2,6 +2,8 @@ import React from 'react';
 import * as Minesweeper from './minesweeper.js';
 import Board from './board.jsx';
 import * as Util from './util.js';
+import ReactModal from 'react-modal';
+import HighScores from './high_scores.jsx';
 
 class Game extends React.Component {
   constructor (props) {
@@ -23,7 +25,6 @@ class Game extends React.Component {
     } else {
       this.gameBoard = new Minesweeper.Board(difficulty);
     }
-
     this.setState({showTitleScreen: false});
   }
 
@@ -32,8 +33,11 @@ class Game extends React.Component {
   }
 
   render () {
-    if (this.state.showTitleScreen) {
-      return (
+    let display;
+    if (!this.state.showTitleScreen) {
+      display = <Board gameBoard={this.gameBoard} updateBoard={this.updateBoard} resetGame={this.resetGame} />;
+    } else {
+      display = (
         <div className='titleScreen'>
           <h3>Select your difficulty level</h3>
           <button className='btn-easy' onClick={() => this.startGame('easy')}>Easy</button>
@@ -41,11 +45,15 @@ class Game extends React.Component {
           <button className='btn-hard' onClick={() => this.startGame('hard')}>Expert</button>
         </div>
       );
-    } else {
-      return (
-        <Board gameBoard={this.gameBoard} updateBoard={this.updateBoard} resetGame={this.resetGame} />
-      );
     }
+    return (
+      <div>
+        { display }
+        <ReactModal>
+          <HighScores />
+        </ReactModal>
+      </div>
+    );
   }
 }
 

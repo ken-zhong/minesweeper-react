@@ -1,6 +1,6 @@
 # Minesweeper
 
-Built in JavaScript and React. Live site: https://ken-zhong.github.io/minesweeper-react/
+Built in JavaScript and React, with an Express server and MongoDB/Mongoose database to persist high scores. Live site: https://ken-zhong.github.io/minesweeper-react/
 
 Bundled with Webpack and transpiled with Babel. All the original game and view JS files are in the /lib folder.
 
