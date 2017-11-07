@@ -39,7 +39,7 @@ class Board extends React.Component {
   }
 
   render () {
-    if (this.gameBoard.gameOver) {
+    if (this.gameBoard.gameOver || this.gameBoard.isWon()) {
       this.stopTimer();
     }
     return (

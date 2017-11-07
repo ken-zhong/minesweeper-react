@@ -21650,7 +21650,7 @@ var Board = function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      if (this.gameBoard.gameOver) {
+      if (this.gameBoard.gameOver || this.gameBoard.isWon()) {
         this.stopTimer();
       }
       return _react2.default.createElement(
