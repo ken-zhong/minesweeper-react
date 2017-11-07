@@ -21409,6 +21409,19 @@ var Board = exports.Board = function () {
   }
 
   _createClass(Board, [{
+    key: 'mineCounter',
+    value: function mineCounter() {
+      var result = this.numMines;
+      this.grid.forEach(function (row) {
+        row.forEach(function (tile) {
+          if (tile.flagged) {
+            result--;
+          }
+        });
+      });
+      return result;
+    }
+  }, {
     key: 'setupBoard',
     value: function setupBoard() {
       var size = this.gridSize;
@@ -21564,6 +21577,10 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _board_header = __webpack_require__(37);
+
+var _board_header2 = _interopRequireDefault(_board_header);
+
 var _tile = __webpack_require__(35);
 
 var _tile2 = _interopRequireDefault(_tile);
@@ -21586,99 +21603,92 @@ var Board = function (_React$Component) {
 
     _this.gameBoard = props.gameBoard;
     _this.updateBoard = props.updateBoard;
-    _this.state = { board: _this.gameBoard };
+    _this.state = {
+      board: _this.gameBoard,
+      gameTime: 0
+    };
+    _this.startTimer = _this.startTimer.bind(_this);
+    _this.stopTimer = _this.stopTimer.bind(_this);
+    _this.startTimer();
     return _this;
   }
 
   _createClass(Board, [{
-    key: 'render',
-    value: function render() {
+    key: 'startTimer',
+    value: function startTimer() {
       var _this2 = this;
 
-      var header = this.getHeader();
+      this.timer = window.setInterval(function () {
+        var newTime = _this2.state.gameTime + 1;
+        _this2.setState({ gameTime: newTime });
+      }, 1000);
+    }
+  }, {
+    key: 'stopTimer',
+    value: function stopTimer() {
+      clearInterval(this.timer);
+    }
+  }, {
+    key: 'formatNumString',
+    value: function formatNumString(num) {
+      switch (num) {
+        case num > 999:
+          return 999;
+        case num > 99:
+          return num;
+        case num > 9:
+          return '0' + num;
+        default:
+          return '00' + num;
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      if (this.gameBoard.gameOver) {
+        this.stopTimer();
+      }
       return _react2.default.createElement(
         'div',
         null,
-        header,
+        _react2.default.createElement(_board_header2.default, { gameBoard: this.gameBoard, resetGame: this.props.resetGame }),
         _react2.default.createElement(
           'div',
           { className: 'board' },
+          _react2.default.createElement(
+            'div',
+            { className: 'timer-container' },
+            _react2.default.createElement(
+              'span',
+              null,
+              this.formatNumString(this.gameBoard.mineCounter())
+            ),
+            _react2.default.createElement(
+              'span',
+              { className: 'reset-smiley' },
+              '\uD83D\uDE03'
+            ),
+            _react2.default.createElement(
+              'span',
+              null,
+              this.formatNumString(this.state.gameTime)
+            )
+          ),
           this.gameBoard.grid.map(function (row, idx) {
             return _react2.default.createElement(
               'div',
               { className: 'row', key: idx },
               row.map(function (tile, jdx) {
-                return _react2.default.createElement(_tile2.default, { gameBoard: _this2.gameBoard, updateBoard: _this2.updateBoard, gameTile: tile, key: '' + idx + jdx });
+                return _react2.default.createElement(_tile2.default, { gameBoard: _this3.gameBoard,
+                  updateBoard: _this3.updateBoard, gameTile: tile,
+                  key: '' + idx + jdx });
               })
             );
           })
         )
       );
-    }
-  }, {
-    key: 'getHeader',
-    value: function getHeader() {
-      if (this.gameBoard.isWon()) {
-        return _react2.default.createElement(
-          'header',
-          null,
-          _react2.default.createElement(
-            'h3',
-            null,
-            'Congratulations! You won!'
-          ),
-          _react2.default.createElement(
-            'p',
-            { className: 'new-game' },
-            'Play again? ',
-            _react2.default.createElement(
-              'button',
-              { className: 'btn-easy', onClick: this.props.resetGame },
-              'New Game'
-            )
-          )
-        );
-      } else if (this.gameBoard.gameOver) {
-        return _react2.default.createElement(
-          'header',
-          null,
-          _react2.default.createElement(
-            'h3',
-            null,
-            'Oops! Game over!'
-          ),
-          _react2.default.createElement(
-            'p',
-            { className: 'new-game' },
-            'Play again? ',
-            _react2.default.createElement(
-              'button',
-              { className: 'btn-easy', onClick: this.props.resetGame },
-              'New Game'
-            )
-          )
-        );
-      } else {
-        return _react2.default.createElement(
-          'header',
-          null,
-          _react2.default.createElement(
-            'p',
-            null,
-            'Left click to reveal a tile.'
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Right click to flag a tile'
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Click an already revealed tile to \'chord\''
-          )
-        );
-      }
     }
   }]);
 
@@ -21817,6 +21827,89 @@ exports.isMobile = isMobile;
 function isMobile() {
   return typeof window.orientation !== 'undefined' || navigator.userAgent.indexOf('IEMobile') !== -1;
 }
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var BoardHeader = function BoardHeader(props) {
+  if (props.gameBoard.isWon()) {
+    return _react2.default.createElement(
+      'header',
+      null,
+      _react2.default.createElement(
+        'h3',
+        null,
+        'Congratulations! You won!'
+      ),
+      _react2.default.createElement(
+        'p',
+        { className: 'new-game' },
+        'Play again? ',
+        _react2.default.createElement(
+          'button',
+          { className: 'btn-easy', onClick: props.resetGame },
+          'New Game'
+        )
+      )
+    );
+  } else if (props.gameBoard.gameOver) {
+    return _react2.default.createElement(
+      'header',
+      null,
+      _react2.default.createElement(
+        'h3',
+        null,
+        'Oops! Game over!'
+      ),
+      _react2.default.createElement(
+        'p',
+        { className: 'new-game' },
+        'Play again? ',
+        _react2.default.createElement(
+          'button',
+          { className: 'btn-easy', onClick: props.resetGame },
+          'New Game'
+        )
+      )
+    );
+  } else {
+    return _react2.default.createElement(
+      'header',
+      null,
+      _react2.default.createElement(
+        'p',
+        null,
+        'Left click to reveal a tile.'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Right click to flag a tile'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Click an already revealed tile to \'chord\''
+      )
+    );
+  }
+};
+
+exports.default = BoardHeader;
 
 /***/ })
 /******/ ]);

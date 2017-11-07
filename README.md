@@ -8,6 +8,4 @@ Still todo:
   - jazz up the styling, add smiley face progress element
   - add 'mines left' counter
   - add timer
-  - hard mode currently displays in 'landscape mode'. add a check for mobile users and transpose
-  the grid for a better experience playing in 'portrait mode'
-  - add long press == right click for mobile 
+  - add long press == right click for mobile

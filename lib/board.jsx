@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './board_header.jsx';
 import Tile from './tile.jsx';
 
 class Board extends React.Component {
@@ -6,51 +7,60 @@ class Board extends React.Component {
     super(props);
     this.gameBoard = props.gameBoard;
     this.updateBoard = props.updateBoard;
-    this.state = {board: this.gameBoard};
+    this.state = {
+      board: this.gameBoard,
+      gameTime: 0
+    };
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.startTimer();
+  }
+
+  startTimer () {
+    this.timer = window.setInterval(() => {
+      let newTime = this.state.gameTime + 1;
+      this.setState({gameTime: newTime});
+    }, 1000);
+  }
+
+  stopTimer () {
+    clearInterval(this.timer);
+  }
+
+  formatNumString (num) {
+    switch (num) {
+      case num > 999: return 999;
+      case num > 99: return num;
+      case num > 9: return '0' + num;
+      default: return '00' + num;
+    }
   }
 
   render () {
-    const header = this.getHeader();
+    if (this.gameBoard.gameOver) {
+      this.stopTimer();
+    }
     return (
       <div>
-        { header }
+        <Header gameBoard={this.gameBoard} resetGame={this.props.resetGame} />
         <div className='board'>
+          <div className='timer-container'>
+            <span>{ this.formatNumString(this.gameBoard.mineCounter()) }</span>
+            <span className='reset-smiley'>😃</span>
+            <span>{ this.formatNumString(this.state.gameTime) }</span>
+          </div>
           { this.gameBoard.grid.map((row, idx) => {
             return (
               <div className='row' key={idx}>
-                {row.map((tile, jdx) => <Tile gameBoard={this.gameBoard} updateBoard={this.updateBoard} gameTile={tile} key={`${idx}${jdx}`} />)}
+                {row.map((tile, jdx) => <Tile gameBoard={this.gameBoard}
+                  updateBoard={this.updateBoard} gameTile={tile}
+                  key={`${idx}${jdx}`} />)}
               </div>
             );
           })}
         </div>
       </div>
     );
-  }
-
-  getHeader () {
-    if (this.gameBoard.isWon()) {
-      return (
-        <header>
-          <h3>Congratulations! You won!</h3>
-          <p className='new-game'>Play again? <button className='btn-easy' onClick={this.props.resetGame}>New Game</button></p>
-        </header>
-      );
-    } else if (this.gameBoard.gameOver) {
-      return (
-        <header>
-          <h3>Oops! Game over!</h3>
-          <p className='new-game'>Play again? <button className='btn-easy' onClick={this.props.resetGame}>New Game</button></p>
-        </header>
-      );
-    } else {
-      return (
-        <header>
-          <p>Left click to reveal a tile.</p>
-          <p>Right click to flag a tile</p>
-          <p>Click an already revealed tile to 'chord'</p>
-        </header>
-      );
-    }
   }
 }
 
