@@ -1,4 +1,0 @@
-{
-  "mongoUrl": "mongodb://krabbis:thebard@ds153015.mlab.com:53015/minesweeper",
-  "port": "process.env.PORT || 3000"
-}
