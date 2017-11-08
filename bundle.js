@@ -21231,6 +21231,10 @@ var _high_scores = __webpack_require__(49);
 
 var _high_scores2 = _interopRequireDefault(_high_scores);
 
+var _leaderboard = __webpack_require__(51);
+
+var _leaderboard2 = _interopRequireDefault(_leaderboard);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -21288,45 +21292,41 @@ var Game = function (_React$Component) {
       } else {
         display = _react2.default.createElement(
           'div',
-          { className: 'titleScreen' },
+          null,
           _react2.default.createElement(
-            'h3',
-            null,
-            'Select your difficulty level'
+            'div',
+            { className: 'titleScreen' },
+            _react2.default.createElement(
+              'h3',
+              null,
+              'Select your difficulty level'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn-easy', onClick: function onClick() {
+                  return _this2.startGame('easy');
+                } },
+              'Easy'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn-med', onClick: function onClick() {
+                  return _this2.startGame('medium');
+                } },
+              'Medium'
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'btn-hard', onClick: function onClick() {
+                  return _this2.startGame('hard');
+                } },
+              'Expert'
+            )
           ),
-          _react2.default.createElement(
-            'button',
-            { className: 'btn-easy', onClick: function onClick() {
-                return _this2.startGame('easy');
-              } },
-            'Easy'
-          ),
-          _react2.default.createElement(
-            'button',
-            { className: 'btn-med', onClick: function onClick() {
-                return _this2.startGame('medium');
-              } },
-            'Medium'
-          ),
-          _react2.default.createElement(
-            'button',
-            { className: 'btn-hard', onClick: function onClick() {
-                return _this2.startGame('hard');
-              } },
-            'Expert'
-          )
+          _react2.default.createElement(_leaderboard2.default, null)
         );
       }
-      return _react2.default.createElement(
-        'div',
-        null,
-        display,
-        _react2.default.createElement(
-          _reactModal2.default,
-          null,
-          _react2.default.createElement(_high_scores2.default, null)
-        )
-      );
+      return display;
     }
   }]);
 
@@ -21951,7 +21951,8 @@ function wakeServer() {
 
 function getHighScores(difficulty) {
   return _jquery2.default.ajax({
-    url: 'https://minesweeper-r.herokuapp.com/api/scores/' + difficulty
+    url: 'localhost:3000/api/scores' + difficulty
+    // url: `https://minesweeper-r.herokuapp.com/api/scores/${difficulty}`
   });
 }
 
@@ -33404,6 +33405,120 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _util = __webpack_require__(37);
+
+var ApiUtil = _interopRequireWildcard(_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Leaderboard = function (_React$Component) {
+  _inherits(Leaderboard, _React$Component);
+
+  function Leaderboard(props) {
+    _classCallCheck(this, Leaderboard);
+
+    var _this = _possibleConstructorReturn(this, (Leaderboard.__proto__ || Object.getPrototypeOf(Leaderboard)).call(this, props));
+
+    _this.state = {
+      easy: [],
+      medium: [],
+      hard: []
+    };
+    return _this;
+  }
+
+  _createClass(Leaderboard, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      Object.values(this.state).forEach(function (difficulty) {
+        ApiUtil.getHighScores(difficulty).then(function (res) {
+          _this2.setState(_defineProperty({}, difficulty, res));
+        });
+      });
+    }
+  }, {
+    key: 'formatList',
+    value: function formatList(difficulty) {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h3',
+          null,
+          difficulty
+        ),
+        _react2.default.createElement(
+          'ol',
+          null,
+          this.state[difficulty].map(function (el) {
+            return _react2.default.createElement(
+              'li',
+              null,
+              el.username,
+              ' - ',
+              el.score,
+              ' seconds'
+            );
+          })
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var easyList = this.formatList('easy');
+      var mediumList = this.formatList('medium');
+      var hardList = this.formatList('hard');
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h2',
+          null,
+          'Current Leaderboard'
+        ),
+        easyList,
+        mediumList,
+        hardList
+      );
+    }
+  }]);
+
+  return Leaderboard;
+}(_react2.default.Component);
+
+exports.default = Leaderboard;
 
 /***/ })
 /******/ ]);

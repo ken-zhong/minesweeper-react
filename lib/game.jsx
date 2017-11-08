@@ -4,6 +4,7 @@ import Board from './board.jsx';
 import * as Util from './util.js';
 import ReactModal from 'react-modal';
 import HighScores from './high_scores.jsx';
+import Leaderboard from './leaderboard.jsx';
 
 class Game extends React.Component {
   constructor (props) {
@@ -38,22 +39,18 @@ class Game extends React.Component {
       display = <Board gameBoard={this.gameBoard} updateBoard={this.updateBoard} resetGame={this.resetGame} />;
     } else {
       display = (
-        <div className='titleScreen'>
-          <h3>Select your difficulty level</h3>
-          <button className='btn-easy' onClick={() => this.startGame('easy')}>Easy</button>
-          <button className='btn-med' onClick={() => this.startGame('medium')}>Medium</button>
-          <button className='btn-hard' onClick={() => this.startGame('hard')}>Expert</button>
+        <div>
+          <div className='titleScreen'>
+            <h3>Select your difficulty level</h3>
+            <button className='btn-easy' onClick={() => this.startGame('easy')}>Easy</button>
+            <button className='btn-med' onClick={() => this.startGame('medium')}>Medium</button>
+            <button className='btn-hard' onClick={() => this.startGame('hard')}>Expert</button>
+          </div>
+          <Leaderboard />
         </div>
       );
     }
-    return (
-      <div>
-        { display }
-        <ReactModal>
-          <HighScores />
-        </ReactModal>
-      </div>
-    );
+    return display;
   }
 }
 
