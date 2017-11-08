@@ -1,11 +1,12 @@
 const express = require('express');
+const settings = require('./settings.json');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Score = require('./models/score');
 var cors = require('cors');
 const app = express();
 
-mongoose.connect("mongodb://krabbis:thebard@ds153015.mlab.com:53015/minesweeper");
+mongoose.connect(settings.mongoUrl);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
