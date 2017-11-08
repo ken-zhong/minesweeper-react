@@ -3,11 +3,13 @@ const settings = require('./settings.json');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Score = require('./models/score');
+var cors = require('cors');
 const app = express();
 
 mongoose.connect(settings.mongoUrl);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cors());
 
 // The 'waker' route
 app.get('/', (req, res) => {
