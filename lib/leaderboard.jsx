@@ -12,7 +12,7 @@ class Leaderboard extends React.Component {
   }
 
   componentDidMount () {
-    Object.values(this.state).forEach(difficulty => {
+    Object.keys(this.state).forEach(difficulty => {
       ApiUtil.getHighScores(difficulty).then(res => {
         this.setState({[difficulty]: res});
       });

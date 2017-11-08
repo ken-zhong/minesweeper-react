@@ -21951,8 +21951,7 @@ function wakeServer() {
 
 function getHighScores(difficulty) {
   return _jquery2.default.ajax({
-    url: 'localhost:3000/api/scores' + difficulty
-    // url: `https://minesweeper-r.herokuapp.com/api/scores/${difficulty}`
+    url: 'https://minesweeper-r.herokuapp.com/api/scores/' + difficulty
   });
 }
 
@@ -33460,7 +33459,7 @@ var Leaderboard = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      Object.values(this.state).forEach(function (difficulty) {
+      Object.keys(this.state).forEach(function (difficulty) {
         ApiUtil.getHighScores(difficulty).then(function (res) {
           _this2.setState(_defineProperty({}, difficulty, res));
         });
