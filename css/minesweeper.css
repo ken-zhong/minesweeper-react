@@ -28,7 +28,7 @@ ol {
 }
 
 .timer-container {
-  border: 1px solid grey;
+  border: 1px solid #bbb;
   width: 180px;
   height: 40px;
   margin: 0 auto;
@@ -36,6 +36,7 @@ ol {
   justify-content: space-around;
   align-items: center;
   border-bottom: none;
+  background-color: #eee;
 }
 
 .reset-smiley {

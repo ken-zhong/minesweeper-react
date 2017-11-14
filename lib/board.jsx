@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './board_header.jsx';
 import Tile from './tile.jsx';
+import ReactModal from 'react-modal';
 
 class Board extends React.Component {
   constructor (props) {
@@ -63,6 +64,8 @@ class Board extends React.Component {
             );
           })}
         </div>
+        <ReactModal>
+        </ReactModal>
       </div>
     );
   }
