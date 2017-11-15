@@ -2,8 +2,6 @@ import React from 'react';
 import * as Minesweeper from './minesweeper.js';
 import Board from './board.jsx';
 import * as Util from './util.js';
-import ReactModal from 'react-modal';
-import HighScores from './high_scores.jsx';
 import Leaderboard from './leaderboard.jsx';
 
 class Game extends React.Component {
