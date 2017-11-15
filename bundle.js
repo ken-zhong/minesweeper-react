@@ -1357,10 +1357,10 @@ var Leaderboard = function (_React$Component) {
           _react2.default.createElement(
             'ol',
             null,
-            this.state[difficulty].map(function (el) {
+            this.state[difficulty].map(function (el, idx) {
               return _react2.default.createElement(
                 'li',
-                null,
+                { key: idx },
                 el.username,
                 ' - ',
                 el.score,
@@ -22021,8 +22021,9 @@ var Board = function (_React$Component) {
     key: 'stopTimer',
     value: function stopTimer() {
       clearInterval(this.timer);
+      // if (this.gameBoard.isWon()) { this.setState({openModal: true}); }
       if (this.gameBoard.isWon()) {
-        this.setState({ openModal: true });
+        this.state.openModal = true;
       }
     }
   }, {
@@ -22106,7 +22107,6 @@ var Board = function (_React$Component) {
             );
           })
         ),
-        this.gameBoard.isWon() ? _react2.default.createElement(_leaderboard2.default, null) : null,
         _react2.default.createElement(
           _reactModal2.default,
           { isOpen: this.state.openModal, className: 'upload-modal',
@@ -22135,7 +22135,8 @@ var Board = function (_React$Component) {
                 'label',
                 null,
                 'Your name:',
-                _react2.default.createElement('input', { type: 'text', value: this.state.uploadText, onChange: this.handleInput.bind(this) })
+                _react2.default.createElement('input', { type: 'text', value: this.state.uploadText,
+                  onChange: this.handleInput.bind(this) })
               ),
               _react2.default.createElement('br', null),
               _react2.default.createElement(

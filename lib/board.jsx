@@ -32,7 +32,8 @@ class Board extends React.Component {
 
   stopTimer () {
     clearInterval(this.timer);
-    if (this.gameBoard.isWon()) { this.setState({openModal: true}); }
+    // if (this.gameBoard.isWon()) { this.setState({openModal: true}); }
+    if (this.gameBoard.isWon()) { this.state.openModal = true }
   }
 
   closeModal () {
@@ -87,7 +88,6 @@ class Board extends React.Component {
             );
           })}
         </div>
-        { this.gameBoard.isWon() ? <Leaderboard /> : null }
         <ReactModal isOpen={this.state.openModal} className='upload-modal'
           onRequestClose={this.closeModal.bind(this)}>
           <div className='upload-container'>
@@ -97,7 +97,8 @@ class Board extends React.Component {
               Would you like to submit your score?</p>
             <form onSubmit={this.handleSubmit.bind(this)}>
               <label>Your name:
-                <input type='text' value={this.state.uploadText} onChange={this.handleInput.bind(this)} />
+                <input type='text' value={this.state.uploadText}
+                  onChange={this.handleInput.bind(this)} />
               </label>
               <br />
               <button className='btn-easy'>Submit</button>

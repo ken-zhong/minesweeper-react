@@ -29,8 +29,8 @@ class Leaderboard extends React.Component {
         <div>
           <h3>{ difficulty }</h3>
           <ol>
-            { this.state[difficulty].map(el => {
-              return <li>{el.username} - {el.score} seconds</li>;
+            { this.state[difficulty].map((el, idx) => {
+              return <li key={idx}>{el.username} - {el.score} seconds</li>;
             }) }
           </ol>
         </div>

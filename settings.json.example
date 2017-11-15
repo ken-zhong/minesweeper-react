@@ -1,3 +1,6 @@
+// This is a "settings file" where you can store your API keys, ports settings,
+// ENV settings, etc.
+
 {
-  "mongoUrl": "your db url here"
+  "mongoUrl": "hidden, your db url goes here"
 }
