@@ -20,16 +20,22 @@ class Leaderboard extends React.Component {
   }
 
   formatList (difficulty) {
-    return (
-      <div>
-        <h3>{ difficulty }</h3>
-        <ol>
-          { this.state[difficulty].map(el => {
-            return <li>{el.username} - {el.score} seconds</li>;
-          }) }
-        </ol>
-      </div>
-    );
+    if (this.state[difficulty].length === 0) {
+      return (
+        <div>Loading...</div>
+      );
+    } else {
+      return (
+        <div>
+          <h3>{ difficulty }</h3>
+          <ol>
+            { this.state[difficulty].map(el => {
+              return <li>{el.username} - {el.score} seconds</li>;
+            }) }
+          </ol>
+        </div>
+      );
+    }
   }
 
   render () {

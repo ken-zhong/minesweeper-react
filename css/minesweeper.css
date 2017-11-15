@@ -39,6 +39,38 @@ ol {
   background-color: #eee;
 }
 
+.upload-modal {
+  margin: 10vh auto;
+  width: 400px;
+  height: 400px;
+  background: white;
+  border: 1px solid #ccc;
+  outline: none;
+  border-radius: 20px;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+  .upload-container input {
+    margin-left: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 15px;
+    width: 190px;
+  }
+
+  .upload-container form {
+    text-align: center;
+  }
+
+  .upload-container button {
+    font-size: 1.1em;
+  }
+
 .reset-smiley {
   font-size: 24px;
   cursor: pointer;
@@ -86,12 +118,21 @@ ol {
 .btn-easy {
   background-color: #1cce08;
 }
+  .btn-easy:hover {
+    background-color: #22ef0b;
+  }
 .btn-med {
   background-color: #ce9504;
 }
+  .btn-med:hover {
+    background-color: #edaa02;
+  }
 .btn-hard {
   background-color: #c40303;
 }
+  .btn-hard:hover {
+    background-color: #e50404;
+  }
 
 /*COLORS FOR VALUE TILES*/
 .blue {
