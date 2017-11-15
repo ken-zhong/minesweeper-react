@@ -22317,7 +22317,8 @@ var Tile = function (_React$Component) {
       } else {
         return _react2.default.createElement(
           'div',
-          { onClick: this.handleClick, onContextMenu: this.handleClick, className: classNames },
+          { onClick: this.handleClick, onContextMenu: this.handleClick,
+            className: classNames },
           toRender
         );
       }
